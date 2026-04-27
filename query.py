@@ -46,7 +46,7 @@ def load_retriever() -> GraphRAGRetriever:
     retriever = GraphRAGRetriever(
         kg=kg,
         communities=communities,
-        api_key=config.openai_api_key,
+        llm_params=config.get_llm_params(),
         extraction_model=config.extraction_model,
         summarization_model=config.summarization_model,
         embedding_model=config.embedding_model,

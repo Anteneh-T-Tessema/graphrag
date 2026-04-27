@@ -29,6 +29,7 @@ from sentence_transformers import SentenceTransformer
 from .graph_builder import KnowledgeGraph
 from .models import Community, Entity, Relationship
 from .summarizer import CommunitySummarizer
+from .config import config
 
 console = Console()
 

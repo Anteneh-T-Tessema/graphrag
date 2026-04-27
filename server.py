@@ -284,10 +284,10 @@ class QueryRequest(BaseModel):
 
 @app.post("/api/query")
 async def run_query(req: QueryRequest):
-    if not config.openai_api_key:
+    if config.llm_provider == "openai" and not config.openai_api_key:
         raise HTTPException(
             status_code=400,
-            detail="OPENAI_API_KEY not set. Add it to your .env file."
+            detail="OPENAI_API_KEY not set. Add it to your .env file or switch to LLM_PROVIDER=ollama"
         )
     if _kg is None:
         raise HTTPException(
