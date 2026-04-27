@@ -11,6 +11,9 @@ This document provides an exhaustive, visual guide to the **GraphRAG Intelligenc
 The system is designed to be zero-touch. The moment a file is added to your environment, a series of background events are triggered.
 
 ### 🔄 Data Ingestion Flowchart
+
+![The Watcher Radar](/Users/antenehtessema/.gemini/antigravity/brain/ecd0d963-2426-40dd-ba91-f7651b85053d/graphrag_watcher_radar_viz_1777322988386.png)
+
 ```mermaid
 graph TD
     A[New File .txt/.md/.pdf] -->|FileSystem Event| B(Watcher Service)
@@ -28,9 +31,24 @@ graph TD
 
 ---
 
-## 2. Advanced Retrieval Strategies
+## 2. Intelligence Modules
+
+The core of GraphRAG lies in its ability to cluster information and search across different resolutions.
+
+### 🏘️ Community Detection
+The Leiden algorithm groups related nodes into high-density "communities," allowing the LLM to summarize large thematic areas.
+
+![Community Detection Viz](/Users/antenehtessema/.gemini/antigravity/brain/ecd0d963-2426-40dd-ba91-f7651b85053d/graphrag_community_detection_viz_1777322971599.png)
+
+---
+
+## 3. Advanced Retrieval Strategies
 
 GraphRAG doesn't just search for text; it understands **relationships** and **thematic structures**.
+
+### 🔍 Local vs Global Search Comparison
+
+![Search Modes Split](/Users/antenehtessema/.gemini/antigravity/brain/ecd0d963-2426-40dd-ba91-f7651b85053d/graphrag_search_modes_split_viz_1777323007636.png)
 
 ### 🔍 Local Search (Deep Context)
 Best for specific entities. It extracts a "knowledge subgraph" around your query.
