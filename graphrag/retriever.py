@@ -24,6 +24,7 @@ from typing import List, Optional
 import numpy as np
 from openai import AsyncOpenAI, OpenAI
 from rich.console import Console
+from sentence_transformers import SentenceTransformer
 
 from .graph_builder import KnowledgeGraph
 from .models import Community, Entity, Relationship
@@ -38,8 +39,12 @@ def _cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
     return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-10))
 
 
-def _embed(texts: List[str], client: OpenAI, model: str) -> np.ndarray:
-    response = client.embeddings.create(input=texts, model=model)
+def _embed(texts: List[str], client: OpenAI, model_name: str) -> np.ndarray:
+    if config.embedding_provider == "local":
+        model = SentenceTransformer(model_name)
+        return model.encode(texts)
+        
+    response = client.embeddings.create(input=texts, model=model_name)
     return np.array([r.embedding for r in response.data])
 
 

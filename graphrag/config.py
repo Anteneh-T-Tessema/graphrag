@@ -25,11 +25,16 @@ class GraphRAGConfig(BaseSettings):
     )
 
     # ── LLM ──────────────────────────────────────────────────────────────────
-    llm_provider: str = Field(default="openai", alias="LLM_PROVIDER") # openai | ollama
+    llm_provider: str = Field(default="openai", alias="LLM_PROVIDER") # openai | ollama | groq
     openai_api_key: str = Field(default="", alias="OPENAI_API_KEY")
     ollama_base_url: str = Field(default="http://localhost:11434/v1", alias="OLLAMA_BASE_URL")
+    groq_api_key: str = Field(default="", alias="GROQ_API_KEY")
+    groq_base_url: str = Field(default="https://api.groq.com/openai/v1", alias="GROQ_BASE_URL")
     extraction_model: str = Field(default="gpt-4o", alias="EXTRACTION_MODEL")
     summarization_model: str = Field(default="gpt-4o-mini", alias="SUMMARIZATION_MODEL")
+    
+    # ── Embeddings ────────────────────────────────────────────────────────────
+    embedding_provider: str = Field(default="openai", alias="EMBEDDING_PROVIDER") # openai | local
     embedding_model: str = Field(default="text-embedding-3-small", alias="EMBEDDING_MODEL")
     embedding_dim: int = Field(default=1536, alias="EMBEDDING_DIM")
 
@@ -76,8 +81,13 @@ class GraphRAGConfig(BaseSettings):
         """Get common LLM parameters based on provider."""
         if self.llm_provider == "ollama":
             return {
-                "api_key": "ollama", # Dummy key for Ollama
+                "api_key": "ollama",
                 "base_url": self.ollama_base_url
+            }
+        if self.llm_provider == "groq":
+            return {
+                "api_key": self.groq_api_key,
+                "base_url": self.groq_base_url
             }
         return {
             "api_key": self.openai_api_key
