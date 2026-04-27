@@ -34,14 +34,14 @@ RUN mkdir -p data output/graph output/summaries output/chroma
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8000
+ENV PORT=7860
 
 # Expose the port
-EXPOSE 8000
+EXPOSE 7860
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/api/status || exit 1
+    CMD curl -f http://localhost:7860/api/status || exit 1
 
 # Start the server
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port ${PORT:-7860}"]

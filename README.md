@@ -1,3 +1,14 @@
+---
+title: GraphRAG Blueprint
+emoji: 🕸️
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: true
+license: mit
+---
+
 # GraphRAG — Custom Knowledge Graph RAG Pipeline
 
 A production-grade, from-scratch implementation of the **GraphRAG** architecture based on Microsoft Research's design: a two-phase system that builds a knowledge graph from documents and queries it via Local (entity-centric) or Global (community-summary) search.
