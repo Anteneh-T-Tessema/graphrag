@@ -1,19 +1,15 @@
-version: '3.8'
-
 services:
-  neo4j:
-    image: neo4j:5.20.0
-    container_name: graphrag-neo4j
+  graphrag:
+    image: ghcr.io/anteneht-t-tessema/graphrag:main
     ports:
-      - "7474:7474" # HTTP
-      - "7687:7687" # Bolt
-    environment:
-      - NEO4J_AUTH=neo4j/password
-      - NEO4J_PLUGINS=["apoc", "gds"] # Graph Data Science for advanced communities
+      - "7860:7860"
+    env_file: .env
     volumes:
-      - neo4j_data:/data
-      - neo4j_logs:/logs
-
-volumes:
-  neo4j_data:
-  neo4j_logs:
+      - ./data:/app/data
+      - ./output:/app/output
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
