@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GraphRAG — Knowledge Graph Intelligence</title>
+  <meta name="description" content="Explore, query, and visualize your knowledge graph powered by GraphRAG — an advanced AI-driven graph retrieval system." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- ── Sidebar ──────────────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/>
+          <circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/>
+          <line x1="6" y1="6" x2="10" y2="10"/><line x1="14" y1="10" x2="18" y2="6"/>
+          <line x1="6" y1="18" x2="10" y2="14"/><line x1="14" y1="14" x2="18" y2="18"/>
+        </svg>
+      </div>
+      <span class="brand-name">GraphRAG</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active" id="nav-dashboard" onclick="showTab('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        Dashboard
+      </a>
+      <a class="nav-item" id="nav-graph" onclick="showTab('graph')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/>
+          <line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/>
+          <line x1="5" y1="19" x2="19" y2="19"/>
+        </svg>
+        Knowledge Graph
+      </a>
+      <a class="nav-item" id="nav-query" onclick="showTab('query')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Query Intelligence
+      </a>
+      <a class="nav-item" id="nav-communities" onclick="showTab('communities')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Communities
+      </a>
+      <a class="nav-item" id="nav-pipeline" onclick="showTab('pipeline')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Pipeline
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="status-indicator" id="system-status-dot">
+        <span class="dot dot-idle" id="status-dot"></span>
+        <span id="status-label">Checking…</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main ─────────────────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- ─ DASHBOARD ──────────────────────────────────────────────── -->
+    <section class="tab-panel active" id="tab-dashboard">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle">Knowledge graph at a glance</p>
+        </div>
+        <button class="btn btn-primary" onclick="showTab('pipeline')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Run Pipeline
+        </button>
+      </div>
+
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card" id="stat-nodes">
+          <div class="stat-icon nodes-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-nodes-val">—</div>
+            <div class="stat-label">Entity Nodes</div>
+          </div>
+        </div>
+        <div class="stat-card" id="stat-edges">
+          <div class="stat-icon edges-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-edges-val">—</div>
+            <div class="stat-label">Relationships</div>
+          </div>
+        </div>
+        <div class="stat-card" id="stat-communities">
+          <div class="stat-icon communities-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-communities-val">—</div>
+            <div class="stat-label">Communities</div>
+          </div>
+        </div>
+        <div class="stat-card" id="stat-files">
+          <div class="stat-icon files-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-files-val">—</div>
+            <div class="stat-label">Source Documents</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-panels">
+        <div class="panel" id="quick-query-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Quick Query</h2>
+            <span class="badge badge-auto">Auto-Route</span>
+          </div>
+          <div class="quick-query-form">
+            <input type="text" id="quick-q-input" class="input" placeholder='Try "What are the main themes?" or "Who founded OpenAI?"' />
+            <button class="btn btn-primary" onclick="runQuickQuery()">Ask</button>
+          </div>
+          <div class="quick-answer-box" id="quick-answer-box" style="display:none">
+            <div class="answer-mode-tag" id="quick-answer-mode"></div>
+            <div class="answer-text" id="quick-answer-text"></div>
+          </div>
+        </div>
+
+        <div class="panel" id="recent-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Source Documents</h2>
+          </div>
+          <ul class="file-list" id="file-list">
+            <li class="file-item placeholder">No documents indexed yet</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ GRAPH ──────────────────────────────────────────────────── -->
+    <section class="tab-panel" id="tab-graph">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Knowledge Graph</h1>
+          <p class="page-subtitle">Interactive force-directed visualization</p>
+        </div>
+        <div class="graph-controls">
+          <label class="control-label">Filter type</label>
+          <select id="node-type-filter" class="select" onchange="applyGraphFilter()">
+            <option value="ALL">All types</option>
+            <option value="PERSON">Person</option>
+            <option value="ORG">Organization</option>
+            <option value="CONCEPT">Concept</option>
+            <option value="PLACE">Place</option>
+            <option value="EVENT">Event</option>
+            <option value="PRODUCT">Product</option>
+          </select>
+          <button class="btn btn-ghost" onclick="resetGraph()">Reset</button>
+        </div>
+      </div>
+
+      <div class="graph-container" id="graph-container">
+        <div class="graph-loading" id="graph-loading">
+          <div class="spinner"></div>
+          <p>Loading graph…</p>
+        </div>
+        <svg id="graph-svg"></svg>
+
+        <!-- Node tooltip -->
+        <div class="node-tooltip" id="node-tooltip" style="display:none">
+          <div class="tooltip-name" id="tooltip-name"></div>
+          <div class="tooltip-type" id="tooltip-type"></div>
+          <div class="tooltip-desc" id="tooltip-desc"></div>
+          <div class="tooltip-degree" id="tooltip-degree"></div>
+        </div>
+
+        <!-- Legend -->
+        <div class="graph-legend" id="graph-legend">
+          <div class="legend-title">Node Types</div>
+          <div class="legend-items" id="legend-items"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ QUERY ──────────────────────────────────────────────────── -->
+    <section class="tab-panel" id="tab-query">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Query Intelligence</h1>
+          <p class="page-subtitle">Chat with your knowledge graph</p>
+        </div>
+        <div class="mode-selector" id="mode-selector">
+          <button class="mode-btn active" id="mode-auto" onclick="setMode('auto')">⚡ Auto</button>
+          <button class="mode-btn" id="mode-local" onclick="setMode('local')">🔍 Local</button>
+          <button class="mode-btn" id="mode-global" onclick="setMode('global')">🌐 Global</button>
+        </div>
+      </div>
+
+      <div class="chat-container" id="chat-container">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-welcome">
+            <div class="welcome-icon">🧠</div>
+            <h3>Ask anything about your documents</h3>
+            <p><strong>Local search</strong> answers specific entity questions by traversing the graph.<br/>
+            <strong>Global search</strong> synthesizes community summaries for holistic insights.</p>
+            <div class="example-questions">
+              <button class="example-btn" onclick="fillExample('Who founded OpenAI and what is their background?')">Who founded OpenAI?</button>
+              <button class="example-btn" onclick="fillExample('What are the main themes and patterns in this dataset?')">Main themes?</button>
+              <button class="example-btn" onclick="fillExample('How is Microsoft connected to OpenAI?')">Microsoft → OpenAI?</button>
+              <button class="example-btn" onclick="fillExample('What companies compete in the AI industry?')">AI competitors?</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <textarea
+              id="chat-input"
+              class="chat-textarea"
+              placeholder="Ask a question about your knowledge graph…"
+              rows="1"
+              onkeydown="handleChatKey(event)"
+            ></textarea>
+            <button class="send-btn" id="send-btn" onclick="sendQuery()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </button>
+          </div>
+          <div class="chat-hint">
+            <span id="current-mode-label">Mode: Auto (smart routing)</span>
+            <span>Enter to send • Shift+Enter for newline</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ COMMUNITIES ────────────────────────────────────────────── -->
+    <section class="tab-panel" id="tab-communities">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Communities</h1>
+          <p class="page-subtitle">Auto-detected clusters of related entities</p>
+        </div>
+        <div class="search-box">
+          <input type="text" id="community-search" class="input" placeholder="Search communities…" oninput="filterCommunities()" />
+        </div>
+      </div>
+      <div class="communities-grid" id="communities-grid">
+        <div class="placeholder-message">Run the pipeline to discover communities.</div>
+      </div>
+    </section>
+
+    <!-- ─ PIPELINE ───────────────────────────────────────────────── -->
+    <section class="tab-panel" id="tab-pipeline">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Pipeline</h1>
+          <p class="page-subtitle">Index documents and build the knowledge graph</p>
+        </div>
+      </div>
+
+      <div class="pipeline-layout">
+        <!-- Upload -->
+        <div class="panel upload-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Upload Documents</h2>
+          </div>
+          <div class="drop-zone" id="drop-zone"
+               ondragover="handleDragOver(event)" ondrop="handleDrop(event)" onclick="document.getElementById('file-input').click()">
+            <div class="drop-icon">📄</div>
+            <p class="drop-text">Drop .txt or .md files here</p>
+            <p class="drop-sub">or click to browse</p>
+            <input type="file" id="file-input" multiple accept=".txt,.md" style="display:none" onchange="handleFileSelect(event)" />
+          </div>
+          <div id="upload-status" class="upload-status" style="display:none"></div>
+        </div>
+
+        <!-- Run -->
+        <div class="panel run-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Run Indexing Pipeline</h2>
+          </div>
+          <div class="pipeline-steps-visual">
+            <div class="pipeline-step" id="ps-chunking">
+              <div class="ps-dot"></div>
+              <div class="ps-label">1. Chunk Documents</div>
+            </div>
+            <div class="pipeline-step" id="ps-extracting">
+              <div class="ps-dot"></div>
+              <div class="ps-label">2. Extract Entities (LLM)</div>
+            </div>
+            <div class="pipeline-step" id="ps-building_graph">
+              <div class="ps-dot"></div>
+              <div class="ps-label">3. Build Graph</div>
+            </div>
+            <div class="pipeline-step" id="ps-detecting_communities">
+              <div class="ps-dot"></div>
+              <div class="ps-label">4. Detect Communities</div>
+            </div>
+            <div class="pipeline-step" id="ps-summarizing">
+              <div class="ps-dot"></div>
+              <div class="ps-label">5. Summarize (LLM)</div>
+            </div>
+            <div class="pipeline-step" id="ps-saving">
+              <div class="ps-dot"></div>
+              <div class="ps-label">6. Save Outputs</div>
+            </div>
+          </div>
+
+          <div class="progress-section" id="progress-section" style="display:none">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+            </div>
+            <div class="progress-label" id="progress-label">Starting…</div>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="run-btn" onclick="startPipeline()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Start Indexing
+          </button>
+        </div>
+
+        <!-- Logs -->
+        <div class="panel logs-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Pipeline Logs</h2>
+            <button class="btn btn-ghost btn-xs" onclick="clearLogs()">Clear</button>
+          </div>
+          <div class="log-console" id="log-console">
+            <span class="log-placeholder">Logs will appear here during pipeline execution…</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# ─── LLM & Embeddings ───────────────────────────────────────────────────────
+openai>=1.30.0
+tiktoken>=0.7.0
+
+# ─── Config ──────────────────────────────────────────────────────────────────
+pydantic-settings>=2.3.0
+
+# ─── Graph Engine ────────────────────────────────────────────────────────────
+networkx>=3.3
+python-louvain>=0.16        # Louvain community detection (pure Python)
+# graspologic>=3.4.1        # Leiden algorithm — requires LLVM toolchain (optional)
+
+# ─── Vector Store ────────────────────────────────────────────────────────────
+chromadb>=0.5.0
+
+# ─── Data & Utilities ────────────────────────────────────────────────────────
+numpy>=1.26.0
+pandas>=2.2.0
+pydantic>=2.7.0
+python-dotenv>=1.0.1
+tenacity>=8.3.0             # Retry with exponential backoff
+rich>=13.7.0                # Pretty terminal output
+tqdm>=4.66.0
+
+# ─── Serialization ───────────────────────────────────────────────────────────
+jsonlines>=4.0.0
+
+# ─── Optional: Neo4j production backend ──────────────────────────────────────
+# neo4j>=5.20.0

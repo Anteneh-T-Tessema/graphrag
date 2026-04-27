@@ -1,0 +1,41 @@
+The Rise of Artificial Intelligence Companies
+
+OpenAI was founded in 2015 by Sam Altman, Elon Musk, Greg Brockman, and several other researchers.
+The organization was initially structured as a non-profit with a mission to ensure that artificial
+general intelligence benefits all of humanity. In 2019, OpenAI transitioned to a "capped-profit"
+model to attract the capital needed for large-scale AI research.
+
+Microsoft Corporation became a major strategic partner of OpenAI, investing $1 billion in 2019 and
+subsequently leading a multi-billion dollar investment round in 2023, valuing OpenAI at approximately
+$29 billion. This partnership gave Microsoft exclusive licensing rights to OpenAI's GPT technology,
+which was integrated into Microsoft's Azure cloud platform and the Bing search engine.
+
+Sam Altman serves as CEO of OpenAI and has been a driving force behind the commercialization
+of large language models. He previously led Y Combinator, the prestigious Silicon Valley startup
+accelerator that has produced companies like Airbnb, Dropbox, and Stripe.
+
+Anthropic is another major AI safety company, founded in 2021 by Dario Amodei and Daniela Amodei,
+who previously worked at OpenAI. Anthropic developed Claude, a family of AI assistants designed
+with a focus on safety and alignment. The company has received significant investment from
+Google and Amazon.
+
+Google DeepMind is Alphabet's AI research division, formed through the merger of Google Brain
+and DeepMind in 2023. DeepMind was originally founded in London in 2010 by Demis Hassabis,
+Shane Legg, and Mustafa Suleyman, and was acquired by Google in 2014.
+
+Demis Hassabis serves as CEO of Google DeepMind. Under his leadership, DeepMind achieved
+landmark results including AlphaGo (defeating the world Go champion in 2016), AlphaFold
+(solving the protein folding problem in 2020), and Gemini (Google's flagship LLM family).
+
+The competition between OpenAI, Anthropic, and Google DeepMind has accelerated AI development
+significantly. All three organizations focus on large language models, AI safety research,
+and the development of multimodal systems capable of processing text, images, audio, and video.
+
+Meta AI, led by Chief AI Scientist Yann LeCun, takes a different philosophical approach,
+advocating for open-source AI development. Meta released the LLaMA family of models openly,
+enabling researchers and developers worldwide to build applications without API dependency.
+
+Nvidia Corporation has become a critical infrastructure provider for the entire AI industry.
+Its H100 and A100 GPU chips are the primary hardware used to train large AI models. CEO Jensen
+Huang has positioned Nvidia at the center of the AI supply chain. OpenAI, Anthropic, Google,
+and Meta all rely heavily on Nvidia hardware for model training.
