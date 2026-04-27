@@ -46,14 +46,22 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+import asyncio
 from graphrag.config import config
 from graphrag.graph_builder import KnowledgeGraph
 from graphrag.neo4j_store import Neo4jKnowledgeGraph
 from graphrag.summarizer import CommunitySummarizer
+from graphrag.watcher import start_watcher
 
 # ─── App setup ───────────────────────────────────────────────────────────────
 
 app = FastAPI(title="GraphRAG UI", version="1.0.0")
+_loop = None
+
+@app.on_event("startup")
+async def startup_event():
+    global _loop
+    _loop = asyncio.get_running_loop()
 
 app.add_middleware(
     CORSMiddleware,
@@ -113,6 +121,13 @@ def _refresh_state():
 
 # Attempt to load on startup
 _refresh_state()
+
+def _trigger_pipeline_from_watcher():
+    if not _pipeline_status["running"] and _loop:
+        asyncio.run_coroutine_threadsafe(_run_pipeline_bg("./data"), _loop)
+
+# Start file watcher
+start_watcher(_trigger_pipeline_from_watcher)
 
 
 # ─── WebSocket broadcast ──────────────────────────────────────────────────────

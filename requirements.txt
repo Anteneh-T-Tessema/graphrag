@@ -25,6 +25,7 @@ tenacity>=8.3.0             # Retry with exponential backoff
 rich>=13.7.0                # Pretty terminal output
 tqdm>=4.66.0
 pypdf>=4.2.0
+watchdog>=4.0.0
 
 # ─── API & UI ────────────────────────────────────────────────────────────────
 fastapi>=0.111.0
