@@ -14,7 +14,7 @@ license: mit
 A production-grade, from-scratch implementation of the **GraphRAG** architecture based on Microsoft Research's design: a two-phase system that builds a knowledge graph from documents and queries it via Local (entity-centric) or Global (community-summary) search.
 
 > [!TIP]
-> **New:** This implementation now supports **Ollama** for a 100% local, private GraphRAG experience. See [DOCUMENTATION.md](DOCUMENTATION.md) for details.
+> **New:** This implementation now supports **Ollama** for a 100% local, private GraphRAG experience. See our [VISUAL_GUIDE.md](VISUAL_GUIDE.md) and [DOCUMENTATION.md](DOCUMENTATION.md) for details.
 
 ---
 
