@@ -114,11 +114,22 @@ python query.py --interactive
 python query.py --json "What are the key themes?"
 ```
 
-### 4. Run Tests
+### 4. Running in the Background (Forever Free)
+
+If you want the GraphRAG Intelligence Engine to run continuously in the background on your machine (starting automatically on login), we provide a universal setup script for macOS and Linux.
 
 ```bash
-pytest tests/ -v
+# Set up the background service (Native macOS LaunchAgent or Linux Systemd)
+bash scripts/setup_service.sh
 ```
+
+- **Mac**: Installs a `LaunchAgent` to `~/Library/LaunchAgents/`
+- **Linux**: Installs a `Systemd` user service to `~/.config/systemd/user/`
+- **Logs**: View background activity in `output/logs/`
+
+---
+
+### 5. Run Tests
 
 ## Configuration (`.env`)
 
